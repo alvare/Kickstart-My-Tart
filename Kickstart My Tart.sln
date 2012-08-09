@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Kickstart My Tart", "Kickstart My Tart\Kickstart My Tart.vcxproj", "{4C09C185-79C6-4A46-96A7-7E55E5862F39}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D17DB710-BF8D-466B-84EE-2A40D9B48397}"
+	ProjectSection(SolutionItems) = preProject
+		Kickstart My Tart\srun.png = Kickstart My Tart\srun.png
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4C09C185-79C6-4A46-96A7-7E55E5862F39}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4C09C185-79C6-4A46-96A7-7E55E5862F39}.Debug|Win32.Build.0 = Debug|Win32
+		{4C09C185-79C6-4A46-96A7-7E55E5862F39}.Release|Win32.ActiveCfg = Release|Win32
+		{4C09C185-79C6-4A46-96A7-7E55E5862F39}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
