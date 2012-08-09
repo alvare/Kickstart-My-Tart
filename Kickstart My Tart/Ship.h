@@ -7,13 +7,12 @@ public:
 	~Ship(void);
 	void Draw(sf::RenderWindow &window);
 	void Update();
+
+	//public for debugging
+	sf::Vector2f accel;
 private:
 	sf::Texture texture;
 	sf::Sprite sprite;
 	sf::Vector2f position;
 	sf::Vector2f speed;
-	//sf::Vector2f maxspeed;
-	//sf::Vector2f acceleration;
-	//sf::Vector2f friction;
-	sf::Vector2f accel;
 };

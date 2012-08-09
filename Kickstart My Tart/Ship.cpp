@@ -8,7 +8,7 @@ Ship::Ship(std::string file, sf::RenderWindow &window)
 	sprite.setTexture(texture);
 
 	//defaults
-	accel = sf::Vector2f (2.0f, 2.0f);
+	accel = sf::Vector2f (3.0f, 3.0f);
 	speed = sf::Vector2f (0.0f, 0.0f);
 		
 	//initial position
@@ -31,20 +31,6 @@ void Ship::Draw(sf::RenderWindow &window)
 
 void Ship::Update()
 {
-	/*switch (ev.key.code){
-		case sf::Keyboard::Right:
-			acceleration.x = ev.type == ev.KeyPressed? init_accel.x : 0;
-			break;
-		case sf::Keyboard::Left:
-			acceleration.x = ev.type == ev.KeyPressed? -init_accel.x : 0;
-			break;
-		case sf::Keyboard::Up:
-			acceleration.y = ev.type == ev.KeyPressed? -init_accel.y : 0;
-			break;
-		case sf::Keyboard::Down:
-			acceleration.y = ev.type == ev.KeyPressed? init_accel.y : 0;
-			break;
-	}*/
 	speed.x = speed.y = 0;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		speed.x = accel.x;
