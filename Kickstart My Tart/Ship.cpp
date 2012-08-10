@@ -1,11 +1,14 @@
 #include "Ship.h"
 #include "common.h"
-#include <cmath>
 
-Ship::Ship(std::string file, sf::RenderWindow &window)
+Ship::Ship(std::string filename, sf::RenderWindow &window)
 {
-	texture.loadFromFile(file);
+	anim_state = none;
+	anim_frame = 0;
+
+	texture.loadFromFile(filename);
 	sprite.setTexture(texture);
+	sprite.setTextureRect(sf::IntRect(0, 0, SPRITE_WIDTH, SPRITE_HEIGHT));
 
 	//defaults
 	accel = sf::Vector2f (3.0f, 3.0f);
@@ -20,8 +23,21 @@ Ship::~Ship(void)
 {
 }
 
+inline void Ship::next_frame()
+{
+	if (++anim_frame > 7)
+		anim_frame = 5;
+}
+
 void Ship::Draw(sf::RenderWindow &window)
 {
+	//animating
+	if(anim_state == right)
+	{
+		sprite.setTextureRect(sf::IntRect(SPRITE_WIDTH*anim_frame, 0, SPRITE_WIDTH, SPRITE_HEIGHT));
+	}
+	else
+		sprite.setTextureRect(sf::IntRect(0, 0, SPRITE_WIDTH, SPRITE_HEIGHT));
 
 	position = position+speed;
 	vclamp(position, sf::Vector2f(0, 0), sf::Vector2f(window.getSize().x-sprite.getGlobalBounds().width, window.getSize().y-sprite.getGlobalBounds().height));
@@ -33,9 +49,17 @@ void Ship::Update()
 {
 	speed.x = speed.y = 0;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+	{
+		anim_state = right;
 		speed.x = accel.x;
+	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+	{
+		anim_state = left;
 		speed.x = -accel.x;
+	}
+	else
+		anim_state = none;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 		speed.y = -accel.y;
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))

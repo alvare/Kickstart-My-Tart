@@ -36,7 +36,7 @@ int main()
 	window.setFramerateLimit(60);
 	window.setKeyRepeatEnabled(false);
 
-	Ship ship("srun.png", window);
+	Ship ship("sra.jpg", window);
 
 	sf::Thread editor(&edit, &ship);
 	editor.launch();
@@ -49,6 +49,7 @@ int main()
 			if (ev.type == sf::Event::Closed || (ev.type == sf::Event::KeyPressed && ev.key.code == sf::Keyboard::Escape))
 			{
 				window.close();
+				editor.terminate();
 			}
 		}
 		window.clear();
