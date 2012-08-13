@@ -36,7 +36,7 @@ int main()
 	window.setFramerateLimit(60);
 	window.setKeyRepeatEnabled(false);
 
-	Ship ship("sra.jpg", window);
+	Ship ship("ship_train.bmp", window);
 
 	sf::Thread editor(&edit, &ship);
 	editor.launch();

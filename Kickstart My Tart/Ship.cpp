@@ -6,7 +6,10 @@ Ship::Ship(std::string filename, sf::RenderWindow &window)
 	anim_state = none;
 	anim_frame = 0;
 
-	texture.loadFromFile(filename);
+	sf::Image image;
+	image.loadFromFile(filename);
+	image.createMaskFromColor(sf::Color(255,0,255));
+	texture.loadFromImage(image);
 	sprite.setTexture(texture);
 	sprite.setTextureRect(sf::IntRect(0, 0, SPRITE_WIDTH, SPRITE_HEIGHT));
 
@@ -23,17 +26,13 @@ Ship::~Ship(void)
 {
 }
 
-inline void Ship::next_frame()
-{
-	if (++anim_frame > 7)
-		anim_frame = 5;
-}
-
 void Ship::Draw(sf::RenderWindow &window)
 {
 	//animating
 	if(anim_state == right)
 	{
+		if (++anim_frame > 7)
+			anim_frame = 5;
 		sprite.setTextureRect(sf::IntRect(SPRITE_WIDTH*anim_frame, 0, SPRITE_WIDTH, SPRITE_HEIGHT));
 	}
 	else
@@ -59,7 +58,10 @@ void Ship::Update()
 		speed.x = -accel.x;
 	}
 	else
+	{
 		anim_state = none;
+		anim_frame = 0;
+	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 		speed.y = -accel.y;
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))

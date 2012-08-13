@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#define SPRITE_WIDTH 99
-#define SPRITE_HEIGHT 106
+#define SPRITE_WIDTH 111
+#define SPRITE_HEIGHT 150
 #define SPRITE_COUNT 8
 class Ship
 {
@@ -20,6 +20,4 @@ private:
 	sf::Vector2f speed;
 	enum {left, none, right} anim_state;
 	int anim_frame;
-
-	inline void next_frame();
 };
