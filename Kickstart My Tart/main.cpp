@@ -33,7 +33,7 @@ void edit(Ship *object)
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(640, 800, 32), "Kickstart My Tart");
-	window.setFramerateLimit(60);
+	//window.setFramerateLimit(60);
 	window.setKeyRepeatEnabled(false);
 
 	Ship ship("ship_train.bmp", window);
@@ -41,8 +41,21 @@ int main()
 	sf::Thread editor(&edit, &ship);
 	editor.launch();
 	
+	int frame_counter = 0;
+	sf::Clock fps = sf::Clock();
+	fps.restart();
+
 	while (window.isOpen())
 	{
+
+		//FPS
+		frame_counter++;
+		if(fps.getElapsedTime().asSeconds() > 1.0f){
+			fps.restart();
+			//std::cout << frame_counter;
+			frame_counter = 0;
+		}
+
 		sf::Event ev;
 		while (window.pollEvent(ev))
 		{
