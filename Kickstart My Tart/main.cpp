@@ -4,7 +4,6 @@
 #include <SFML/Graphics.hpp>
 #include "Ship.h"
 #include "SimpleText.h"
-//#include "common.h"
 
 void editor_wrapper(Ship* ship){
 	ship->edit();
@@ -34,7 +33,8 @@ int main()
 
 		//---fps
 		frame_count++;
-		if(fps_clock.getElapsedTime().asSeconds() > 1.0f){
+		if(fps_clock.getElapsedTime().asSeconds() > 1.0f)
+		{
 			fps_clock.restart();
 			text_fps_number.str("");
 			text_fps_number << frame_count;

@@ -1,16 +1,16 @@
+#include <iostream>
 #include "Ship.h"
 #include "common.h"
-#include <iostream>
 
 Ship::Ship(std::string filename, sf::RenderWindow &window)
 {
 	//---animation init
 	anim_state = none;
 	anim_frame = 0;
-
-	int tmp[SPRITE_COUNT] = {4, 4, 3, 3, 2, 2, 4}; //ultra efficient array initializing
+	//---ultra efficient array initializing
+	int tmp[SPRITE_COUNT] = {4, 4, 3, 3, 2, 2, 4};
 	for(int i=0;i<SPRITE_COUNT;i++){
-		array_memory[i] = tmp[i];
+		anim_timing[i] = tmp[i];
 	}
 	frame_count = 0;
 
@@ -74,7 +74,7 @@ void Ship::update()
 	{
 		if(anim_state == right)
 		{
-			if(++frame_count > array_memory[anim_frame]){
+			if(++frame_count > anim_timing[anim_frame]){
 				if (++anim_frame > SPRITE_COUNT)
 					anim_frame = 5;
 				frame_count = 0;

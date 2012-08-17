@@ -12,7 +12,6 @@ public:
 	void draw(sf::RenderWindow &window);
 	void update();
 	void edit();
-	void* getAddress();
 
 	//public for testing
 	sf::Vector2f accel;
@@ -24,5 +23,5 @@ private:
 	sf::Clock clock;
 	enum {left, none, right} anim_state;
 	int anim_frame, frame_count;
-	int array_memory[SPRITE_COUNT];
+	int anim_timing[SPRITE_COUNT];
 };
