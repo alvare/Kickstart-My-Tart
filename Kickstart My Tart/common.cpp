@@ -1,3 +1,4 @@
+#include <iostream>
 #include "common.h"
 
 void clamp(float &n, const float &min, const float &max)
@@ -12,6 +13,32 @@ void vclamp(sf::Vector2f &n, const sf::Vector2f &min, const sf::Vector2f &max)
 	clamp(n.y, min.y, max.y);
 }
 
+void edit(Ship *object)
+{
+	std::string input = "";
+	char member, var;
+	while(input != "qq")
+	{
+		std::cin >> input;
+		member = input.at(0);
+		var = input.at(1);
+
+		switch (member)
+		{
+		case 'a':
+			switch (var)
+			{
+			case 'x':
+				std::cin >> object->accel.x;
+				break;
+			case 'y':
+				std::cin >> object->accel.y;
+				break;
+			}
+			break;
+		}
+	}
+}
 
 /*void Reduce (sf::Vector2f &speed, const sf::Vector2f &friciton)
 {
