@@ -9,10 +9,10 @@ Ship::Ship(std::string filename, sf::RenderWindow &window)
 	anim_frame = 0;
 	//---ultra efficient array initializing
 	int tmp[SPRITE_COUNT] = {4, 4, 3, 3, 2, 2, 4};
-	for(int i=0;i<SPRITE_COUNT;i++){
+	for(int i=0;i<SPRITE_COUNT;i++) {
 		anim_timing[i] = tmp[i];
 	}
-	frame_count = 0;
+	timing_counter = 0;
 
 	clock.restart();
 
@@ -24,7 +24,7 @@ Ship::Ship(std::string filename, sf::RenderWindow &window)
 	sprite.setTextureRect(sf::IntRect(0, 0, SPRITE_WIDTH, SPRITE_HEIGHT));
 
 	//---defaults
-	accel = sf::Vector2f (2.0f, 2.0f);
+	accel = sf::Vector2f (0.6f, 0.6f);
 	speed = sf::Vector2f (0.0f, 0.0f);
 		
 	//---initial position
@@ -38,28 +38,22 @@ Ship::~Ship(void)
 
 void Ship::draw(sf::RenderWindow &window)
 {
-	sprite.setPosition(position);
 	vclamp(position, sf::Vector2f(0, 0), sf::Vector2f(window.getSize().x-sprite.getGlobalBounds().width, window.getSize().y-sprite.getGlobalBounds().height));
+	sprite.setPosition(position);
 	window.draw(sprite);
 }
 
 void Ship::update()
 {
-
 	//input
 	speed.x = speed.y = 0;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-	{
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
 		anim_state = right;
 		speed.x = accel.x;
-	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-	{
+	} else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 		anim_state = left;
 		speed.x = -accel.x;
-	}
-	else
-	{
+	} else {
 		anim_state = none;
 		anim_frame = 0;
 	}
@@ -70,40 +64,36 @@ void Ship::update()
 		speed.y = accel.y;
 
 	//---animating
-	if(clock.getElapsedTime().asMilliseconds() > 10)
-	{
-		if(anim_state == right)
-		{
-			if(++frame_count > anim_timing[anim_frame]){
-				if (++anim_frame > SPRITE_COUNT)
-					anim_frame = 5;
-				frame_count = 0;
-			}
-			sprite.setTextureRect(sf::IntRect(SPRITE_WIDTH*anim_frame, 0, SPRITE_WIDTH, SPRITE_HEIGHT));
+	if(anim_state == right) {
+		if(++timing_counter > anim_timing[anim_frame]) {
+			if (++anim_frame > SPRITE_COUNT)
+				anim_frame = 5;
+			timing_counter = 0;
 		}
-		else
-			sprite.setTextureRect(sf::IntRect(0, 0, SPRITE_WIDTH, SPRITE_HEIGHT));
+		sprite.setTextureRect(sf::IntRect(SPRITE_WIDTH*anim_frame, 0, SPRITE_WIDTH, SPRITE_HEIGHT));
+	} else
+		sprite.setTextureRect(sf::IntRect(0, 0, SPRITE_WIDTH, SPRITE_HEIGHT));
 
-		clock.restart();
-		position = position + speed;
-	}
+	//updating
+	//position = position + speed;
+	position.y = position.y + speed.y*clock.getElapsedTime().asMilliseconds();
+	position.x = position.x + speed.x*clock.getElapsedTime().asMilliseconds();
+
+	clock.restart();
 }
 
 void Ship::edit()
 {
 	std::string input = "";
 	char member, var;
-	while(input != "qq")
-	{
+	while(input != "qq") {
 		std::cin >> input;
 		member = input.at(0);
 		var = input.at(1);
 
-		switch (member)
-		{
+		switch (member) {
 		case 'a':
-			switch (var)
-			{
+			switch (var) {
 			case 'x':
 				std::cin >> this->accel.x;
 				break;

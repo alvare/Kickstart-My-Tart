@@ -22,6 +22,6 @@ private:
 	sf::Vector2f speed;
 	sf::Clock clock;
 	enum {left, none, right} anim_state;
-	int anim_frame, frame_count;
+	int anim_frame, timing_counter;
 	int anim_timing[SPRITE_COUNT];
 };
