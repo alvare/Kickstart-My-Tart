@@ -2,13 +2,10 @@
 #include <sstream>
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
+#include "common.h"
 #include "Ship.h"
 #include "Enemy.h"
 #include "SimpleText.h"
-
-void editor_wrapper(Ship* ship){
-	ship->edit();
-}
 
 int main()
 {
@@ -17,16 +14,18 @@ int main()
 	window.setFramerateLimit(60);
 	window.setKeyRepeatEnabled(false);
 
-	Ship ship("ship_train.bmp", window);
+	Ship ship("ship_train.png", window);
 
-	std::vector<Enemy> enemyList;
-	Enemy enemy1(0, 0);
-	Enemy enemy2(10, 10);
-	enemyList.push_back(enemy1);
-	enemyList.push_back(enemy2);
+	std::vector<Enemy*> enemy_vect;
+	std::vector<Enemy*>::iterator iterator;
+	Enemy enemy1(0, 50);
+	Enemy enemy2(50, 0);
+	enemy_vect.push_back(&enemy1);
+	enemy_vect.push_back(&enemy2);
 	
-	sf::Thread editor(&editor_wrapper, &ship);
-	editor.launch();
+	//---realtime editor
+	//sf::Thread editor(&editor_wrapper, &ship);
+	//editor.launch();
 
 	//---fps counter
 	int frame_count = 0;
@@ -44,11 +43,12 @@ int main()
 		while (window.pollEvent(ev))
 			if (ev.type == sf::Event::Closed || (ev.type == sf::Event::KeyPressed && ev.key.code == sf::Keyboard::Escape)) {
 				window.close();
-				editor.terminate();
+				//editor.terminate();
 			}
+
 		//---fps
 		frame_count++;
-		if(fps_clock.getElapsedTime().asSeconds() > 1.0f) {
+		if(fps_clock.getElapsedTime().asMilliseconds() > 1000.0f) {
 			fps_clock.restart();
 			text_fps_number.str("");
 			text_fps_number << frame_count;
@@ -59,7 +59,12 @@ int main()
 			text_fps.update(window);
 
 		//---drawing
-		//std::for_each(enemyList().be
+		//std::for_each(enemy_vect.begin(), enemy_vect.end(), std::mem_fun<void, Enemy>(&Enemy::update));
+		for(iterator = enemy_vect.begin(); iterator != enemy_vect.end(); iterator++){
+			(*iterator)->update(0);
+		}
+		enemy_vect[0]->draw(window);
+		enemy_vect[1]->draw(window);
 
 		ship.update();
 		ship.draw(window);

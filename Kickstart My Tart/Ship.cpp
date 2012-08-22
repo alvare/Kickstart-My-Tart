@@ -9,22 +9,17 @@ Ship::Ship(std::string filename, sf::RenderWindow &window)
 	anim_frame = 0;
 	//---ultra efficient array initializing
 	int tmp[SPRITE_COUNT] = {4, 4, 3, 3, 2, 2, 4};
-	for(int i=0;i<SPRITE_COUNT;i++) {
-		anim_timing[i] = tmp[i];
-	}
+	std::copy(&tmp[0], &tmp[SPRITE_COUNT], anim_timing);
 	timing_counter = 0;
 
 	clock.restart();
 
-	sf::Image image;
-	image.loadFromFile(filename);
-	image.createMaskFromColor(sf::Color(255,0,255)); //colorkey stuff
-	texture.loadFromImage(image);
+	texture.loadFromFile(filename);
 	sprite.setTexture(texture);
 	sprite.setTextureRect(sf::IntRect(0, 0, SPRITE_WIDTH, SPRITE_HEIGHT));
 
 	//---defaults
-	accel = sf::Vector2f (0.6f, 0.6f);
+	accel = sf::Vector2f (0.4f, 0.4f);
 	speed = sf::Vector2f (0.0f, 0.0f);
 		
 	//---initial position

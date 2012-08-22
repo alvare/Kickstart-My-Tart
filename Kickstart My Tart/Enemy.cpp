@@ -1,6 +1,8 @@
-#include "Enemy.h"
+#define _USE_MATH_DEFINES
+//#include <cmath>
 #include <iostream>
-
+#include "Enemy.h"
+#define RAD M_PI/180
 
 Enemy::Enemy(float x, float y)
 {
@@ -9,8 +11,12 @@ Enemy::Enemy(float x, float y)
 	texture.loadFromImage(image);
 	sprite.setTexture(texture);
 
+	vel = 1.0f;
+	angle = 0.0f;
+
 	//---defaults
 	position = sf::Vector2f(x, y);
+	sprite.setPosition(position);
 }
 
 
@@ -23,8 +29,8 @@ void Enemy::draw(sf::RenderWindow &window)
 	window.draw(sprite);
 }
 
-void Enemy::update()
+void Enemy::update(float angle)
 {
-	position += sf::Vector2f(1, 1);
+	position += sf::Vector2f(vel*sin(angle*RAD), vel*cos(angle*RAD));
 	sprite.setPosition(position);
 }

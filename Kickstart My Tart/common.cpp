@@ -13,6 +13,10 @@ void vclamp(sf::Vector2f &n, const sf::Vector2f &min, const sf::Vector2f &max)
 	clamp(n.y, min.y, max.y);
 }
 
+void editor_wrapper(Ship* ship){
+	ship->edit();
+}
+
 /*void Reduce (sf::Vector2f &speed, const sf::Vector2f &friciton)
 {
 	speed.x *= friciton.x;
