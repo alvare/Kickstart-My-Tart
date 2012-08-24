@@ -11,12 +11,11 @@ Enemy::Enemy(float x, float y)
 	texture.loadFromImage(image);
 	sprite.setTexture(texture);
 
-	vel = 1.0f;
-	angle = 0.0f;
-
 	//---defaults
 	position = sf::Vector2f(x, y);
 	sprite.setPosition(position);
+	vel = 1.0f;
+	angle = 0.0f;
 }
 
 
@@ -24,13 +23,13 @@ Enemy::~Enemy(void)
 {
 }
 
-void Enemy::draw(sf::RenderWindow &window)
+void Enemy::draw(sf::RenderWindow* window)
 {
-	window.draw(sprite);
+	window->draw(sprite);
 }
 
-void Enemy::update(float angle)
+void Enemy::update(double* angle)
 {
-	position += sf::Vector2f(vel*sin(angle*RAD), vel*cos(angle*RAD));
+	position += sf::Vector2f(vel*sin(*angle*RAD), vel*cos(*angle*RAD));
 	sprite.setPosition(position);
 }

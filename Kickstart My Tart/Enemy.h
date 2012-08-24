@@ -6,8 +6,8 @@ class Enemy
 public:
 	Enemy(float x, float y);
 	~Enemy(void);
-	void draw(sf::RenderWindow &window);
-	void update(float angle);
+	void draw(sf::RenderWindow* window);
+	void update(double* angle);
 private:
 	sf::Texture texture;
 	sf::Sprite sprite;

@@ -1,5 +1,8 @@
+//#include <time.h>
+//#include <stdlib.h>
 #include <iostream>
 #include <sstream>
+#include <list>
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 #include "common.h"
@@ -9,19 +12,17 @@
 
 int main()
 {
-	//---window setup
-	sf::RenderWindow window(sf::VideoMode(640, 800, 32), "Kickstart My Tart");
-	window.setFramerateLimit(60);
-	window.setKeyRepeatEnabled(false);
+	//---random!
+	std::srand(time(NULL));
+	double random = std::rand() % 360+1;
 
-	Ship ship("ship_train.png", window);
-
-	std::vector<Enemy*> enemy_vect;
-	std::vector<Enemy*>::iterator iterator;
-	Enemy enemy1(0, 50);
-	Enemy enemy2(50, 0);
-	enemy_vect.push_back(&enemy1);
-	enemy_vect.push_back(&enemy2);
+	std::list<Enemy*> enemy_list;
+	std::list<Enemy*>::iterator itr_enemy_list;
+	Enemy enemy1(100, 50);
+	Enemy enemy2(50, 100);
+	enemy_list.push_back(&enemy1);
+	enemy_list.push_back(&enemy2);
+	itr_enemy_list = enemy_list.begin();
 	
 	//---realtime editor
 	//sf::Thread editor(&editor_wrapper, &ship);
@@ -35,6 +36,13 @@ int main()
 	fps_clock.restart();
 
 	sf::Event ev;
+
+	//---window setup
+	sf::RenderWindow window(sf::VideoMode(640, 800, 32), "Kickstart My Tart");
+	window.setFramerateLimit(60);
+	window.setKeyRepeatEnabled(false);
+
+	Ship ship("ship_train.png", window);
 
 	//-----------------------------------MAIN LOOP
 	while (window.isOpen()) {
@@ -54,17 +62,19 @@ int main()
 			text_fps_number << frame_count;
 			text_fps.update("FPS: "+text_fps_number.str(), window);
 			frame_count = 0;
+			//TESTING
+			random = std::rand()%360+1;
 		}
 		else
 			text_fps.update(window);
 
 		//---drawing
-		//std::for_each(enemy_vect.begin(), enemy_vect.end(), std::mem_fun<void, Enemy>(&Enemy::update));
-		for(iterator = enemy_vect.begin(); iterator != enemy_vect.end(); iterator++){
-			(*iterator)->update(0);
-		}
-		enemy_vect[0]->draw(window);
-		enemy_vect[1]->draw(window);
+		std::for_each(enemy_list.begin(), enemy_list.end(), std::bind2nd(std::mem_fun<void, Enemy>(&Enemy::update), &random));
+		std::for_each(enemy_list.begin(), enemy_list.end(), std::bind2nd(std::mem_fun<void, Enemy>(&Enemy::draw), &window));
+		/*(*itr_enemy_list)->draw(window);
+		++itr_enemy_list;
+		(*itr_enemy_list)->draw(window);
+		itr_enemy_list = enemy_list.begin();*/
 
 		ship.update();
 		ship.draw(window);
